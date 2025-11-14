@@ -29,14 +29,42 @@ def renderPage1():
 @app.route('/page2',methods=['GET','POST'])
 def renderPage2():
     session["thirdPlanet"]=request.form['thirdPlanet']
-    return render_template('page2.html')
-    
-    if thirdPlanet == 'Earth'
 
+    return render_template('page2.html')
 @app.route('/page3',methods=['GET','POST'])
 def renderPage3():
     session["resultColor"]=request.form['resultColor']
-    return render_template('page3.html')
+        
+    
+    if session['thirdPlanet'] == 'Earth':
+        points = 5
+    else:
+        points = 0
+        
+    if session["resultColor"] == 'Green':
+        points = 5
+    else: 
+        points = 0     
+        
+
+    
+    
+    return render_template('page3.html', score=session['scores'])
+
+
+        
     
 if __name__=="__main__":
     app.run(debug=True)
+answer = "B"  # Replace with your actual .form() answer variable
+
+'''if answer == "A":
+    points = 5
+elif answer == "B":
+    points = 3
+elif answer == "C":
+    points = 1
+else:
+    points = 0
+
+print("Points for your answer:", points)'''
