@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+
+{% block title %}Page 4--Now we know everything!{% endblock %}
+
+{% block content %}
+  <h1>Now I know:</h1>
+
+<ul>
+ <li> The name of the planet is: {{ session['thirdPlanet'] }} </li>
+ <p>This was {{ response1 }}</p>
+ <!--<li> Your last name is: {{ session['lastName'] }} </li>-->
+ <li> The color is: {{ session['resultColor'] }} </li>
+ <p>This was {{ response2 }}</p>
+ <li> The first color is: {{ session['mixedColor1'] }} </li>
+ <p>This was {{ response3 }}</p>
+ <li> The second color is: {{ session['mixedColor2'] }} </li>
+ <p>This was {{ response4 }}</p>
+</ul>
+
+<p>You scored : {{ points }} out of 20</p>
+
+
+{% endblock %}

@@ -1,19 +1,17 @@
 {% extends "layout.html" %}
 
-{% block title %}Page 3--Now we know everything!{% endblock %}
+{% block title %}Page 3: What two colors make orange?{% endblock %}
 
 {% block content %}
-  <h1>Now I know:</h1>
+  <h1>Page 3: What two colors make orange?</h1>
 
-<ul>
- <li> The name of the planet is: {{ session['thirdPlanet'] }} </li>
- <!--<li> Your last name is: {{ session['lastName'] }} </li>-->
- <li> The color is: {{ session['resultColor'] }} </li>
- <li> The first color is: {{ session['mixedColor1'] }} </li>
- <li> The second color is: {{ session['mixedColor2'] }} </li>
-</ul>
+ <form action={{ url_for("renderPage4") }} method="POST">
+  What two colors make orange?:<br>
+  <input type="text" name="mixedColor1">
+  <input type="text" name="mixedColor2">
+  <input type="submit" name="Submit" value="Submit">
+ </form> 
 
-<p>You scored : {{ points}}</p>
 
 
 {% endblock %}

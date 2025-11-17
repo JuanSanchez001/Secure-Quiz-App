@@ -12,9 +12,10 @@ app = Flask(__name__)
 app.secret_key=os.environ["SECRET_KEY"]; #This is an environment variable.  
                                      #The value should be set on the server. 
                          #To run locally, set in env.bat (env.sh on Macs) and include that file in gitignore so the secret key is not made public.
-
+# secret key is = 367412045c345cde97f3102048adc2156b67b7ed82f1667bf457572ef8ce772d
 @app.route('/')
 def renderMain():
+    session.clear()
     return render_template('home.html')
 
 @app.route('/startOver')
@@ -28,26 +29,55 @@ def renderPage1():
 
 @app.route('/page2',methods=['GET','POST'])
 def renderPage2():
+    if "thirdPlanet" in session:
+    
+    
+    else:
     session["thirdPlanet"]=request.form['thirdPlanet']
 
     return render_template('page2.html')
+    
 @app.route('/page3',methods=['GET','POST'])
 def renderPage3():
     session["resultColor"]=request.form['resultColor']
+    
+    return render_template('page3.html')
+    
+@app.route('/page4',methods=['GET','POST'])
+def renderPage4():
     session["mixedColor1"]=request.form['mixedColor1']
     session["mixedColor2"]=request.form['mixedColor2']
-        
+    
     points=0
     if session['thirdPlanet'] in ['Earth', 'earth']:
+        reply1 = "Correct!"
         points += 5
+    else:
+        reply1 = "Incorrect:/"
+        
     if session["resultColor"] in ['Green', 'green']:
+        reply2 = "Correct!"
         points += 5
+    else:
+        reply2 = "Incorrect:/"
+        
     if session["mixedColor1"] in ['Yellow','yellow','Red','red']:
+        reply3 = "Correct!"
         points += 5
+    else:
+        reply3 = "Incorrect!"
+        
     if session["mixedColor2"] in ['Yellow','yellow','Red','red']:
+        reply4 = "Correct!"
         points += 5
+    else:
+        reply4 = "Incorrect:/"
 
-    return render_template('page3.html', points=points)
+    return render_template('page4.html', response1 = reply1, response2 = reply2, response3 = reply3, response4 = reply4, points=points)
     
+    #for not allowing use if session[]...
+    
+    if "thirdPlanet" in session:
+    else:
 if __name__=="__main__":
     app.run(debug=True)
