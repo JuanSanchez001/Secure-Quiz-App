@@ -12,7 +12,7 @@ app = Flask(__name__)
 app.secret_key=os.environ["SECRET_KEY"]; #This is an environment variable.  
                                      #The value should be set on the server. 
                          #To run locally, set in env.bat (env.sh on Macs) and include that file in gitignore so the secret key is not made public.
-# secret key is = 367412045c345cde97f3102048adc2156b67b7ed82f1667bf457572ef8ce772d
+# set SECRET_KEY=367412045c345cde97f3102048adc2156b67b7ed82f1667bf457572ef8ce772d
 @app.route('/')
 def renderMain():
     session.clear()
@@ -29,27 +29,29 @@ def renderPage1():
 
 @app.route('/page2',methods=['GET','POST'])
 def renderPage2():
-    if "thirdPlanet" in session:
-    
-    
-    else:
-    session["thirdPlanet"]=request.form['thirdPlanet']
-
-    return render_template('page2.html')
+    if request.method == 'POST':
+            if "thirdPlanet" not in session:
+                session["thirdPlanet"]=request.form['thirdPlanet']#saves it to session
+            return render_template('page2.html')
     
 @app.route('/page3',methods=['GET','POST'])
 def renderPage3():
-    session["resultColor"]=request.form['resultColor']
+    if request.method == 'POST':
+        if "resultColor" not in session:
+            session["resultColor"]=request.form['resultColor']
+    
     
     return render_template('page3.html')
     
 @app.route('/page4',methods=['GET','POST'])
 def renderPage4():
-    session["mixedColor1"]=request.form['mixedColor1']
-    session["mixedColor2"]=request.form['mixedColor2']
-    
+    if request.method == 'POST':
+        if "mixedColor1" and "mixedColor2" not in session:
+            session["mixedColor1"]=request.form['mixedColor1']
+            session["mixedColor2"]=request.form['mixedColor2']
+           
     points=0
-    if session['thirdPlanet'] in ['Earth', 'earth']:
+    if session["thirdPlanet"] in ['Earth', 'earth']:
         reply1 = "Correct!"
         points += 5
     else:
@@ -75,9 +77,5 @@ def renderPage4():
 
     return render_template('page4.html', response1 = reply1, response2 = reply2, response3 = reply3, response4 = reply4, points=points)
     
-    #for not allowing use if session[]...
-    
-    if "thirdPlanet" in session:
-    else:
 if __name__=="__main__":
     app.run(debug=True)
