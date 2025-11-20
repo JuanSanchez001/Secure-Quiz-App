@@ -12,7 +12,7 @@ app = Flask(__name__)
 app.secret_key=os.environ["SECRET_KEY"]; #This is an environment variable.  
                                      #The value should be set on the server. 
                          #To run locally, set in env.bat (env.sh on Macs) and include that file in gitignore so the secret key is not made public.
-# set SECRET_KEY=367412045c345cde97f3102048adc2156b67b7ed82f1667bf457572ef8ce772d
+
 @app.route('/')
 def renderMain():
     session.clear()
