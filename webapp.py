@@ -1,7 +1,9 @@
 import os
+import time
 from flask import Flask, url_for, render_template, request
 from flask import redirect
 from flask import session
+
 
 app = Flask(__name__)
 
@@ -22,9 +24,10 @@ def renderMain():
 def startOver():
     session.clear() #clears variable values and creates a new session
     return redirect(url_for('renderMain')) # url_for('renderMain') could be replaced with '/'
-
+    
 @app.route('/page1')
 def renderPage1():
+    session['start_time'] = time.time()
     return render_template('page1.html')
 
 @app.route('/page2',methods=['GET','POST'])
@@ -74,8 +77,13 @@ def renderPage4():
         points += 5
     else:
         reply4 = "Incorrect:/"
+    
+    session['end_time'] = time.time()
+    time_taken = session['end_time'] - session['start_time']
+    total_time= round(time_taken)
 
-    return render_template('page4.html', response1 = reply1, response2 = reply2, response3 = reply3, response4 = reply4, points=points)
+
+    return render_template('page4.html', response1 = reply1, response2 = reply2, response3 = reply3, response4 = reply4, points=points, time_taken=total_time)
     
 if __name__=="__main__":
     app.run(debug=True)
